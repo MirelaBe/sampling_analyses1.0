@@ -1,0 +1,18 @@
+{
+    "contents" : "data(exampledata)\n\ndat <- FindOutliers(exampledata[, 2:3], species = exampledata[, 1],  outliers.mtp = NULL, outliers.td = 100, \n                    outp = \"outliers.list\")\nplot(dat)\nplot(exampledata$longitude, exampledata$latitude)\n\n\nsampbias:::.OutlierCoordinates(exampledata[, 2:3], species = exampledata[, 1], \n                               multiplier = NULL, tdi =  10, method = \"Haversine\")\n\ndat <- CleanCoordinates(exampledata[, 2:3], species = exampledata[, 1], validity = F, zeros = F, \n                        capitals = F, centroids = F, seas = F, \n                        urban = F, countrycheck = F, outliers = T, \n                        GBIF = F, duplicates = F, verbose = F, outliers.mtp = NULL, outliers.td = 10, \n                        output = \"spatialvalid\")\n\n\nFindOutliers(exampledata[, 2:3], species = exampledata[, 1],  outliers.mtp = NULL, outliers.td = 10,\n             outp = \"outliers.list\")\n",
+    "created" : 1448489733309.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "1356683394",
+    "id" : "AAD43FF7",
+    "lastKnownWriteTime" : 7011605692497750387,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

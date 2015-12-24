@@ -1,0 +1,18 @@
+{
+    "contents" : "BRasterd <- function(x, sim.outp.path, verb = T, \n                     sim.type = c(\"random\", \"regular\",\"stratified\",\n                                  \"nonaligned\", \"hexagonal\",\"clustered\",\n                                  \"Fibonacci\"),\n                     sim.method = c(\"convexhull\", \"rectangle\", \n                                    \"polygon\", \"intersect\"),\n                     sim.extent = c(\"regional\", \"global\"), \n                     sim.model = c(\"planar\", \"spheric\"), ...){\n  \n  if (min(x[, 1]) * max(x[, 1]) < 0) {\n    lonspan <- abs(min(x[, 1])) + abs(max(x[, 1]))\n  } else {\n    lonspan <- abs(abs(max(x[, 1])) - abs(min(x[, 1])))\n  }\n  if (min(x[, 2]) * max(x[, 2]) < 0) {\n    latspan <- abs(min(x[, 2])) + abs(max(x[, 2]))\n  } else {\n    latspan <- abs(abs(max(x[, 2])) - abs(min(x[, 2])))\n  }\n  \n  ras <- coordinates(raster(nrows = ceiling(lonspan/(cellsize)), \n                            ncols = ceiling(latspan/(cellsize)), \n                            xmn = min(x[, 1]), xmx = max(x[, 1]),\n                            ymn = min(x[, 2]), ymx = max(x[, 2])))\n  ras <- ras <- GridTopology(cellcentre.offset = c(min(x[, 1]), min(x[, 2])), \n                             cellsize = c((cellsize), (cellsize)), \n                             cells.dim = c(ceiling(lonspan/(cellsize)),\n                                           ceiling(latspan/(cellsize))))\n  ras <- coordinates(ras)\n  \n  cr <- list()\n  for (i in 1:dim(ras)[1]) {\n    cr[[i]] <- extent(c(ras[i, 1] - (cellsize - 1e-08), ras[i, 1] + \n                          cellsize, ras[i, 2] - (cellsize - 1e-08), ras[i, 2] + cellsize))\n  }\n  \n  dat2 <- SpatialPoints(x)\n  rownames(dat2@coords) <- rownames(x)\n  dat <- lapply(cr, function(x) crop(dat2, x))\n  dat <- dat[!unlist(lapply(dat, is.null))]\n  dat <- lapply(dat, coordinates)\n  mis <- as.numeric(unlist(lapply(dat, rownames)))\n  mis <- x[which(!rownames(x) %in% mis), ]  # add entries missed by geographic splitting\n  dat[[length(dat) + 1]] <- mis\n  \n  \n  samps <- lapply(dat, function(x) SamplingBiasLarge(x, ...))\n  sims <- lapply(dat, function(X) SimCoords(x))\n  lis <- list(1:length(samps))\n  eva <- lapply(lis, BiasEval(samps[[lis]], SimCoords[[lis]]))\n}",
+    "created" : 1448488859460.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1511806035",
+    "id" : "A671A13A",
+    "lastKnownWriteTime" : 1441720936,
+    "path" : "C:/Users/xzizal/Desktop/GitHub/sampbias/R/BRasterd.R",
+    "project_path" : "R/BRasterd.R",
+    "properties" : {
+        "tempName" : "Untitled3"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

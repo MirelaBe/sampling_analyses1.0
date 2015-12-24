@@ -1,0 +1,18 @@
+{
+    "contents" : "plot.outliers.list <- function(x, type = c(\"perspecies\", \"alloutliers\"), \n                               pch = 4, col = \"red\", cex = 0.5, bg = NULL, \n                               ...) {\n  match.arg(type)\n  if (is.null(bg)) {\n    mins <- c(min(unlist(lapply(x, function(y) min(y$longitude)))) - 5, \n              max(unlist(lapply(x, function(y) max(y$longitude)))) + \n                5)\n    maxs <- c(min(unlist(lapply(x, function(y) min(y$latitude)))) - 5, \n              max(unlist(lapply(x, function(y) max(y$latitude)))) + \n                5)\n  }\n  \n  \n  if (type[1] == \"alloutliers\") {\n    if (is.null(bg)) {\n      plot(mins, maxs, type = \"n\", xlab = \"\", ylab = \"\", ...)\n    } else {\n      plot(bg, ...)\n    }\n    dat <- lapply(x, function(y) y[!y$outliers, ])\n    lapply(dat, function(y) {\n      points(y$longitude, y$latitude, pch = pch, col = col, cex = cex)\n    })\n    box(\"plot\")\n  }\n  \n  if (type[1] == \"perspecies\") {\n    dat <- as.list(1:length(x))\n    lapply(dat, function(y) {\n      if (is.null(bg)) {\n        plot(mins, maxs, type = \"n\", xlab = \"\", ylab = \"\", ...)\n      } else {\n        plot(bg, ...)\n      }\n      points(x[[y]][x[[y]]$outliers, ]$longitude, \n             x[[y]][x[[y]]$outliers, ]$latitude, \n             col = \"green\", pch = 16, \n             cex = cex)\n      points(x[[y]][!x[[y]]$outliers, ]$longitude, \n             x[[y]][!x[[y]]$outliers, ]$latitude, \n             col = col, pch = pch, \n             cex = cex)\n      title(names(x)[[y]])\n      legend(\"bottomleft\", c(\"Outlier\", \"Clean\"), \n             col = c(col, \"green\"), pch = c(pch, 16))\n      box(\"figure\")\n    })\n  }\n} ",
+    "created" : 1448463929774.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2867596096",
+    "id" : "5F94518",
+    "lastKnownWriteTime" : 1441784371,
+    "path" : "C:/Users/xzizal/Desktop/GitHub/sampbias/R/plot.outliers.list.R",
+    "project_path" : "R/plot.outliers.list.R",
+    "properties" : {
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

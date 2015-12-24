@@ -1,0 +1,18 @@
+{
+    "contents" : "SimCoordsLarge <- function(x, outp.path, verb = TRUE, ...) {\n  if (dim(x)[1] < 10000) {\n    out <- SimCoords(x, ...)\n  } else {\n    convh <- x[chull(x), ]\n    convh <- SpatialPolygons(list(\n      Polygons(list(Polygon(convh)), ID = paste(x[1,1], \"_convhull\", sep = \"\"))), \n      proj4string = CRS(\"+proj=longlat +datum=WGS84\"))\n    \n    len <- ceiling(dim(x)[1]/10000)\n    \n    tt <- SimCoords(x, n = 10000, ...)\n    write.table(tt, outp.path, sep = \"\\t\", row.names = F)\n    if (verb == T) {\n      print(paste(\"Simulating set \", 1, \"/\", len, sep = \"\"))\n    }\n    \n    for (i in 2:len) {\n      if (verb == T) {\n        print(paste(\"Simulating set \", i, \"/\", len, sep = \"\"))\n      }\n      tt <- SimCoords(x, n = 10000, ...)\n      write.table(tt, outp.path, append = T, col.names = F, sep = \"\\t\", \n                  row.names = F)\n      rm(tt)\n    }\n    \n    out <- read.table(outp.path, sep = \"\\t\", header = T, row.names = NULL)\n    out <- out[!duplicated(out), ]\n    \n    dif <- dim(x)[1] - dim(out)[1]\n    if (dif < 0) {\n      out <- out[sample(1:dim(out)[1], dim(x)[1]), ]\n    } else {\n      add <- SimCoords(x, polygon = convh, n = dif * 2)\n      out <- rbind(out, add)\n      out <- out[sample(1:dim(out)[1], dim(x)[1]), ]\n      rownames(out) <- NULL\n    }\n    \n  }\n  return(out)\n} ",
+    "created" : 1448489191843.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3610275849",
+    "id" : "FE036FE",
+    "lastKnownWriteTime" : 1448489308,
+    "path" : "C:/Users/xzizal/Desktop/GitHub/sampbias/R/SimCoordsLarge.R",
+    "project_path" : "R/SimCoordsLarge.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

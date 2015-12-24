@@ -1,0 +1,17 @@
+{
+    "contents" : ".OutlierCoordinates <- function(x, species, multiplier, tdi, method = \"Haversine\") {\n  out <- rep(TRUE, dim(x)[1])\n  \n  splist <- split(x, f = as.character(species))\n  \n  flags <- lapply(splist, function(y, td = tdi, mltpl = multiplier) {\n    y <- data.frame(y)\n    mupo <- y\n    y <- y[!duplicated(y), ]\n    if (dim(y)[1] < 3) {\n      return(NA)\n    } else {\n      if (method[1] == \"Cosine\") {\n        dist <- distm(y, fun = distCosine)\n      }\n      if (method[1] == \"Haversine\") {\n        dist <- distm(y, fun = distHaversine)\n      }\n      if (method[1] == \"VincentyEllipse\") {\n        dist <- distm(y, fun = distVincentyEllipsoid)\n      }\n      \n      dist[dist == 0] <- NA\n      \n      if (!is.null(mltpl) & !is.null(td)) {\n        stop(\"set outliers.td OR outliers.mtp, the other one to NULL\")\n      }\n      if (!is.null(mltpl)) {\n        mins <- apply(dist, 1, min, na.rm = T)\n        quo <- quantile(mins, c(0.99), na.rm = T)\n        # ind <- which(mins > (quo + IQR(mins, na.rm = T) * mltpl))\n        ind <- which(mins > (quo + mean(mins, na.rm = T) * mltpl))\n      }\n      if (!is.null(td)) {\n        mins <- apply(dist, 1, min, na.rm = T)\n        ind <- which(mins > td * 1000)\n      }\n      \n      # pick duplicates of flagged coordinates\n      \n      if (length(ind) == 0) {\n        mupo <- NA\n      }\n      if (length(ind) == 1) {\n        sel <- merge(y[ind, ], mupo, by.x = c(1, 2), by.y = c(1, 2))\n        mupo <- mupo[mupo[, 1] %in% sel[1] & mupo[, 2] %in% sel[2], \n                     ]\n      }\n      if (length(ind) > 1) {\n        sel <- merge(y[ind, ], mupo, by.x = c(1, 2), by.y = c(1, 2))\n        mupo <- mupo[as.logical(rowSums(apply(sel, 1, function(z) {\n          mupo[, 1] %in% z[1] & mupo[, 2] %in% z[2]\n        }))), ]\n      }\n      return(rownames(mupo))\n    }\n  })\n  flags <- unlist(flags)\n  flags <- flags[!is.na(flags)]\n  out[which(rownames(x) %in% flags)] <- FALSE\n  return(out)\n}",
+    "created" : 1448490363084.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3832825098",
+    "id" : "DA3A9CF6",
+    "lastKnownWriteTime" : 1448490617,
+    "path" : "C:/Users/xzizal/Desktop/GitHub/sampbias/R/internal_OutlierCoordinates.R",
+    "project_path" : "R/internal_OutlierCoordinates.R",
+    "properties" : {
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

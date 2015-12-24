@@ -1,0 +1,18 @@
+{
+    "contents" : "FindOutliers <- function(x, species, outp = c(\"data.frame\", \"summary\",\"outliers.list\"), \n                         outliers.mtp = NULL, outliers.td = 100) {\n  match.arg(outp)\n  dat <- x\n  if (!all(c(\"longitude\", \"latitude\", \"outliers\") %in% names(x))) {\n    if (!all(c(\"longitude\", \"latitude\") %in% names(x))) {\n      stop(\"x must be of class spatialvalid or a data.frame with columns 'longitude', 'latitude'\")\n    } else {\n      dat <- CleanCoordinates(x, species = species, validity = F, zeros = F, \n                            capitals = F, centroids = F, seas = F, \n                            urban = F, countrycheck = F, outliers = T, \n                            GBIF = F, duplicates = F, verbose = F, outliers.mtp = outliers.mtp,\n                            outliers.td = outliers.td, \n                            output = \"spatialvalid\")\n    }\n  }\n  dat <- data.frame(species = species, longitude = dat$longitude, \n                    latitude = dat$latitude, outliers = dat$outliers)\n\n  if (outp[1] == \"summary\") {\n    out <- dat[!dat$outliers, ]\n    out$species <- as.character(out$species)\n    out <- data.frame(table(out$species))\n    names(out) <- c(\"species\", \"n.outliers\")\n  }\n  if (outp[1] == \"data.frame\") {\n    out <- dat[!dat$outliers, ]\n    out <- out[, -4]\n  }\n  if (outp[1] == \"outliers.list\") {\n    out <- split(dat, f = dat$species)\n    sel <- lapply(out, function(x) all(x$outliers))\n    out <- out[!unlist(sel)]\n    class(out) <- c(\"outliers.list\", class(out))\n  }\n  return(out)\n}",
+    "created" : 1448489656199.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3410963494",
+    "id" : "15D27DC9",
+    "lastKnownWriteTime" : 1448491867,
+    "path" : "C:/Users/xzizal/Desktop/GitHub/sampbias/R/FindOutliers.R",
+    "project_path" : "R/FindOutliers.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
