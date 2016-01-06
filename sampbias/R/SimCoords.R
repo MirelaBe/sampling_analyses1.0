@@ -1,4 +1,4 @@
-SimCoords <- function(x, polygon = NULL, 
+SimCoords <- function(x, polygon = NULL, reps = 3,
                       type = c("random", "regular", "stratified", "nonaligned", 
                                "hexagonal", "clustered", "Fibonacci"), 
                       method = c("convexhull", "rectangle", "polygon", "intersect"),
@@ -67,23 +67,32 @@ SimCoords <- function(x, polygon = NULL,
   }
   
   if (model[1] == "planar") {
-    out <- spsample(poly, n, type = type[1])
-    out <- data.frame(out)
-    names(out) <- c("longitude", "latitude")
+    out <- list()
+    for(i in 1:reps){
+      outi <- spsample(poly, n, type = type[1])
+      outi <- data.frame(outi)
+      names(outi) <- c("longitude", "latitude")
+      out[[i]] <- outi
+    }
   }
   if (model[1] == "spheric") {
-    if (extent[1] == "global") {
-      out <- randomCoordinates(n)
-      names(out) <- c("longitude", "latitude")
-    } else {
-      siz <- areaPolygon(poly)/1e+06
-      mult <- round(510072000/siz, 0)
-      out <- SpatialPoints(randomCoordinates(n * mult), proj4string = CRS(proj4string(poly)))
-      tt <- over(out, poly)
-      out <- out[!is.na(tt), ]
-      out <- coordinates(out)
-      out <- data.frame(out)
-      names(out) <- c("longitude", "latitude")
+    out <- list()
+    for(i in 1:reps){
+      if (extent[1] == "global") {
+        outi <- randomCoordinates(n)
+        names(outi) <- c("longitude", "latitude")
+        out[[i]] <- outi
+      } else {
+        siz <- areaPolygon(poly)/1e+06
+        mult <- round(510072000/siz, 0)
+        outi <- SpatialPoints(randomCoordinates(n * mult), proj4string = CRS(proj4string(poly)))
+        tt <- over(outi, poly)
+        outi <- outi[!is.na(tt), ]
+        outi <- coordinates(outi)
+        outi <- data.frame(outi)
+        names(outi) <- c("longitude", "latitude")
+        out[[i]] <- outi
+      }
     }
   }
   return(out)

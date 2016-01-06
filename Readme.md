@@ -1,11 +1,10 @@
 #What is sampbias?
 
-An R package for data cleaning an assessment of sampling bias in biological collcetion databases.
+An R package for cleaning geographic coordinates an assessing sampling biases in biological collection databases.
 
 #Description
 
 Empirical tests to clean erroneous coordinates and to measure sampling bias (B-index) in biological collection datasets. The tests detect the most common errors and biases in collection data. Cleaning tests include: numeric coordinate validity, zero coordinates, assignment to capital coordinates, assignment to country or province centroids, sea coordinates, coordinates from urban areas, agreement between coordinates and country assignment, outlier coordinates per species, GBIF headquarters. Bias evaluation includes: minimum distance to a city, minimum distance to an airport, minimum distance to a road, minimum distance to the coastline, minimum distance to a waterbody, fraction of species collected in protected areas, fraction of species collected in each country and socioeconomic indicators (country specific GDP, GERD, mean peace index, number of herbaria, number of relevant scientific publications). Includes plotting generics to visualize partial Bs and to compare values to simulated data. Additionally includes wrapper functions for large scale data sets and a vignette with an example work-flow.
-
 
 #Examples
 
