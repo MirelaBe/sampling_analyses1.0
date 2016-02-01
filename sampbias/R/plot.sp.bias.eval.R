@@ -1,4 +1,4 @@
-plot.sp.bias.eval <- function(x, ...) {
+plot.sp.bias.eval <- function(x, cex.axes = 1, ...) {
   labs <- gsub("socioeconomic.","", rownames(x$details))
   
   plot(c(1, dim(x$details)[1]), 
@@ -12,8 +12,7 @@ plot.sp.bias.eval <- function(x, ...) {
            col = "grey80")
   axis(2)
   axis(1, labels = labs, at = seq(1, dim(x$details)[1]), 
-       las = 2, cex.axis = 0.7)
-  points(seq(1, dim(x$details)[1]), x$details$partial.B, col = "black", 
-         pch = 16)
+       las = 2, cex.axis = cex.axes)
+  points(seq(1, dim(x$details)[1]), x$details$partial.B, ...)
   box("plot")
 } 

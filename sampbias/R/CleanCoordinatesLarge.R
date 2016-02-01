@@ -1,4 +1,4 @@
-CleanCoordinatesLarge <- function(x, species = NULL, outp.path = NULL, verb = T, rpt = F, dupl = T, 
+CleanCoordinatesLarge <- function(x, species = NULL, outp.path = NULL, verb = T, rpt = F, dupl = F, 
                                   ...) {
   
   val.test <- .ValidCoordinates(x)
@@ -127,8 +127,8 @@ CleanCoordinatesLarge <- function(x, species = NULL, outp.path = NULL, verb = T,
   if(rpt == T){
     rep.nam <- "CleanCoordinates_report.txt"
   }
-  if(is.character(rpt)){rep.nam <- rpt}
-  if(is.character(rep.nam)){
+  if(is.character(rpt)){
+    rep.nam <- rpt
     suma <- data.frame(test = c(as.character(names(out[-c(1:2)])), "Error Quotient"), 
                        flagged.records = c(colSums(!out[-c(1:2)]), 
                                            round(sum(out$summary, na.rm = T)/length(out$summary), 2)))

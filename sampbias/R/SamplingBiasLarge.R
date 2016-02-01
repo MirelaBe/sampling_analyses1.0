@@ -56,7 +56,7 @@ SamplingBiasLarge <- function(x, outp.path = NULL, cellsize = 2,
     tt <- as.numeric(unlist(lapply(li, "rownames")))
     out <- out[order(tt), ]
     rownames(out) <- rownames(x)
-    
+    #test i == 108
   } else {
     tt <- SamplingBias(dat[[1]], refinterpoint = intpref, verbose = F, ...)
     rownames(tt) <- rownames(dat[[1]])
@@ -65,7 +65,9 @@ SamplingBiasLarge <- function(x, outp.path = NULL, cellsize = 2,
       if (verb == T) {
         print(paste(i, "/", length(dat)))
       }
-      tt <- SamplingBias(dat[[i]], refinterpoint = intpref, verbose = F, ...)
+      tt <- SamplingBias(dat[[i]], refinterpoint = intpref, verbose = F,#Hier löschen 
+                         tprotectedarea = T, refprotectedarea = protarea,
+                         tinterpoint = F, tsocioeconomic = F)#, ...)
       rownames(tt) <- rownames(dat[[i]])
       write.table(tt, outp.path, append = T, col.names = F, sep = "\t")
       rm(tt)
@@ -73,11 +75,11 @@ SamplingBiasLarge <- function(x, outp.path = NULL, cellsize = 2,
     out <- read.table(outp.path, sep = "\t", row.names = NULL)
 
     cor <- x[which(!rownames(x) %in% out$row.names),]
-    if( dim(cor)[1] > 0){
+    if( nrow(cor) > 0){
       if(verb == TRUE){
         cat("Applying corrections") # sometimes samples are missed so that dim(out) != dim(x), so here check for this
       }
-    if(dim(cor)[1] > 10000){
+    if(nrow(cor) > 10000){
     cor <- lapply(cor, function(z) {
       splitter <- rep(1:ceiling(dim(z)[1]/10000), each = 10000)
       splitter <- splitter[1:dim(z)[1]]

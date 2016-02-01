@@ -1,4 +1,4 @@
-SimCoords <- function(x, polygon = NULL, reps = 3,
+SimCoords <- function(x, polygon = NULL, reps = 1,
                       type = c("random", "regular", "stratified", "nonaligned", 
                                "hexagonal", "clustered", "Fibonacci"), 
                       method = c("convexhull", "rectangle", "polygon", "intersect"),

@@ -52,80 +52,7 @@
         testdat <- matrix(testdat, ncol = 2)
       }
     }
-# 
-#     if (dim(testdat)[1] == 0) {
-#       testlimits <- c(max(c(min(x[, 1]) - 20, -180)),
-#                       min(c(max(x[, 1]) + 20, 180)), 
-#                       max(c(min(x[, 2]) - 20, -90)), 
-#                       min(c(max(x[, 2]) + 20, 90)))
-#       testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                  referencedata[, 1] < testlimits[2], ]
-#       if (length(as.matrix(testdat)) == 2) {
-#         testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                              testlimits[4]]
-#       } else {
-#         testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                              testdat[, 2] < testlimits[4], ]
-#       }
-#       if(class(testdat) == "numeric"){
-#         testdat <- matrix(testdat, ncol = 2)
-#       }
-#     }
-#     if (dim(testdat)[1] == 0) {
-#       testlimits <- c(max(c(min(x[, 1]) - 40, -180)), 
-#                       min(c(max(x[, 1]) + 40, 180)), 
-#                       max(c(min(x[, 2]) - 40, -90)), 
-#                       min(c(max(x[, 2]) + 40, 90)))
-#       testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                  referencedata[, 1] < testlimits[2], ]
-#       if (length(as.matrix(testdat)) == 2) {
-#         testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                              testlimits[4]]
-#       } else {
-#         testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                              testdat[, 2] < testlimits[4], ]
-#       }
-#       if(class(testdat) == "numeric"){
-#         testdat <- matrix(testdat, ncol = 2)
-#       }
-#     }
-#     if (dim(testdat)[1] == 0) {
-#       testlimits <- c(max(c(min(x[, 1]) - 60, -180)), 
-#                       min(c(max(x[, 1]) + 60, 180)), 
-#                       max(c(min(x[, 2]) - 60, -90)), 
-#                       min(c(max(x[, 2]) + 60, 90)))
-#       testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                  referencedata[, 1] < testlimits[2], ]
-#       if (length(as.matrix(testdat)) == 2) {
-#         testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                              testlimits[4]]
-#       } else {
-#         testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                              testdat[, 2] < testlimits[4], ]
-#       }
-#       if(class(testdat) == "numeric"){
-#         testdat <- matrix(testdat, ncol = 2)
-#       }
-#     }
-#     if (dim(testdat)[1] == 0) {
-#       testlimits <- c(max(c(min(x[, 1]) - 100, -180)), 
-#                       min(c(max(x[, 1]) + 100, 180)), 
-#                       max(c(min(x[, 2]) - 100, -90)), 
-#                       min(c(max(x[, 2]) + 100, 90)))
-#       testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                  referencedata[, 1] < testlimits[2], ]
-#       if (length(as.matrix(testdat)) == 2) {
-#         testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                              testlimits[4]]
-#       } else {
-#         testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                              testdat[, 2] < testlimits[4], ]
-#       }
-#       if(class(testdat) == "numeric"){
-#         testdat <- matrix(testdat, ncol = 2)
-#       }
-#     }
-#     
+
     if (method[1] == "Cosine") {
       out <- distm(x, testdat, fun = distCosine)
     }
@@ -161,7 +88,7 @@
     ras <- coordinates(ras)
     
     cr <- list()
-    for (i in 1:dim(ras)[1]) {
+    for (i in 1:nrow(ras)) {
       cr[[i]] <- extent(c(ras[i, 1] - (cellsize - 1e-08), ras[i,1] + 
                             cellsize, ras[i, 2] - (cellsize - 1e-08), ras[i, 2] + 
                             cellsize))
@@ -222,98 +149,6 @@
           testdat <- matrix(testdat, ncol = 2)
         }
       }
-      
-#       
-#       if (dim(testdat)[1] == 0) {
-#         testlimits <- c(max(c(min(y[, 1]) - 10, -180)), 
-#                         min(c(max(y[, 1]) + 10, 180)), 
-#                         (c(min(y[, 2]) - 10, -90)), 
-#                         min(c(max(y[, 2]) + 10, 90)))
-#         testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                    referencedata[, 1] < testlimits[2], ]
-#         if (length(as.matrix(testdat)) == 2) {
-#           testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                                testlimits[4]]
-#         } else {
-#           testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                                testdat[, 2] < testlimits[4], ]
-#         }
-#         if(class(testdat) == "numeric"){
-#           testdat <- matrix(testdat, ncol = 2)
-#         }
-#       }
-#       if (dim(testdat)[1] == 0) {
-#         testlimits <- c(max(c(min(y[, 1]) - 20, -180)),
-#                         min(c(max(y[, 1]) + 20, 180)), 
-#                         max(c(min(y[, 2]) - 20, -90)), 
-#                         min(c(max(y[, 2]) + 20, 90)))
-#         testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                    referencedata[, 1] < testlimits[2], ]
-#         if (length(as.matrix(testdat)) == 2) {
-#           testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                                testlimits[4]]
-#         } else {
-#           testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                                testdat[, 2] < testlimits[4], ]
-#         }
-#         if(class(testdat) == "numeric"){
-#           testdat <- matrix(testdat, ncol = 2)
-#         }
-#       }
-#       if (dim(testdat)[1] == 0) {
-#         testlimits <- c(max(c(min(y[, 1]) - 40, -180)), 
-#                         min(c(max(y[, 1]) + 40, 180)), 
-#                         max(c(min(y[, 2]) - 40, -90)), 
-#                         min(c(max(y[, 2]) + 40, 90)))
-#         testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                    referencedata[, 1] < testlimits[2], ]
-#         if (length(as.matrix(testdat)) == 2) {
-#           testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                                testlimits[4]]
-#         } else {
-#           testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                                testdat[, 2] < testlimits[4], ]
-#         }
-#         if(class(testdat) == "numeric"){
-#           testdat <- matrix(testdat, ncol = 2)
-#         }
-#       }
-#       if (dim(testdat)[1] == 0) {
-#         testlimits <- c(max(c(min(y[, 1]) - 60, -180)), 
-#                         min(c(max(y[, 1]) + 60, 180)), 
-#                         max(c(min(y[, 2]) - 60, -90)), 
-#                         min(c(max(y[, 2]) + 60, 90)))
-#         testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                    referencedata[, 1] < testlimits[2], ]
-#         if (length(as.matrix(testdat)) == 2) {
-#           testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                                testlimits[4]]
-#         } else {
-#           testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                                testdat[, 2] < testlimits[4], ]
-#         }
-#         if(class(testdat) == "numeric"){
-#           testdat <- matrix(testdat, ncol = 2)
-#         }
-#       }
-#       if (dim(testdat)[1] == 0) {
-#         testlimits <- c(max(c(min(y[, 1]) - 100, -180)), 
-#                         min(c(max(y[, 1]) + 100, 180)), 
-#                         max(c(min(y[, 2]) - 100, -90)), 
-#                         min(c(max(y[, 2]) + 100, 90)))
-#         testdat <- referencedata[referencedata[, 1] > testlimits[1] & 
-#                                    referencedata[, 1] < testlimits[2], ]
-#         if (length(as.matrix(testdat)) == 2) {
-#           testdat <- testdat[testdat[2] > testlimits[3] & testdat[2] < 
-#                                testlimits[4]]
-#         } else {
-#           testdat <- testdat[testdat[, 2] > testlimits[3] & 
-#                                testdat[, 2] < testlimits[4], ]
-#         }
-#         if(class(testdat) == "numeric"){
-#           testdat <- matrix(testdat, ncol = 2)
-#         }
-#       }
       
       if (method[1] == "Cosine") {
         out.int <- distm(y, testdat, fun = distCosine)

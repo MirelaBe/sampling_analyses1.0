@@ -22,12 +22,12 @@ plot.spatialvalid <- function(x, bgmap = NULL, clean = T, details = T,
     poi <- x[, !names(x) %in% c("longitude", "latitude", "summary")]
     for (i in 1:dim(poi)[2]) {
       points(x[poi[, i] == FALSE, 1], x[poi[, i] == FALSE, 2], col = "darkred", 
-             pch = i)
+             pch = i, ...)
     }
     if (clean == TRUE) {
       points(x[x[, "summary"] == TRUE, 1],
              x[x[, "summary"] == TRUE,2], 
-             col = "darkgreen", pch = 16)
+             col = "darkgreen", pch = 16, ...)
       legend("bottom", c(names(poi), "Clean"), 
              pch = c(1:dim(poi)[2], 16), 
              col = c(rep("darkred", dim(poi)[2]), 
@@ -42,11 +42,11 @@ plot.spatialvalid <- function(x, bgmap = NULL, clean = T, details = T,
   if (details == FALSE) {
     points(x[x[, "summary"] == FALSE, 1], 
            x[x[, "summary"] == FALSE,2], 
-           col = "darkred", pch = 4)
+           col = "darkred", pch = 4, ...)
     if (clean == T) {
       points(x[x[, "summary"] == TRUE, 1], 
              x[x[, "summary"] == TRUE, 2], 
-             col = "darkgreen", pch = 16)
+             col = "darkgreen", pch = 16, ...)
       legend("bottomleft", c("Flagged", "Clean"), 
              col = c("darkred", "darkgreen"), pch = c(4,16))
     }
